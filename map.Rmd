@@ -1,12 +1,13 @@
 ---
-title: "maps"
-author: "Kristen Boysen"
+title: "Lab 5: Mapping Restoration using RMarkdown"
+author: "Kristen Boysen, Eliza Berry"
 date: "December 4, 2015"
 output: 
 html_document:
     toc: yes
     number_sections: yes
 ---
+
 ## Create Map of Points
 ```{r}
 # load packages
@@ -38,6 +39,7 @@ leaflet() %>%
   addMarkers(data = pts_gcs, popup=~sprintf('id: %d', id)) 
 ```
 
+## create map with Stamen.Terrain basemap
 ```{r}
 # create map with Stamen.Terrain basemap
 leaflet() %>%  
@@ -45,6 +47,7 @@ leaflet() %>%
   addMarkers(data = pts_gcs, popup=~sprintf('id: %d', id))
 ```
 
+## read points, lines and polygons from geodatabase
 ```{r}
 # read points, lines and polygons from geodatabase
 pts_gcs  = readOGR(gdb, 'pts_tree', verbose=F)    %>% spTransform(leaflet:::epsg4326)
@@ -59,6 +62,7 @@ leaflet() %>%
   addMarkers(data=pts_gcs, popup=~sprintf('id: %d', id))
 ```
 
+## Input Habitat Raster
 ```{r}
 library(raster)
 # set path to your final chosen classified image
@@ -76,4 +80,5 @@ leaflet() %>%
   addRasterImage(r, colors=pal, project=F, opacity=0.8) %>%
   addLegend(pal=pal, values=values(r), title='Habitats')
 ```
+
 
